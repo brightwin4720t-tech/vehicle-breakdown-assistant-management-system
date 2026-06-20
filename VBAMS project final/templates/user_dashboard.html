@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - BreakdownAssist</title>
+    <style>
+        /* --- RESET & BASE STYLES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        .navbar {
+            background-color: #1a202c;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .navbar .logo {
+            color: #ff4757;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #cbd5e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .nav-links .btn-logout {
+            background-color: #4a5568;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .nav-links .btn-logout:hover {
+            background-color: #ff4757;
+        }
+
+        /* --- DASHBOARD CONTAINER --- */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .welcome-header {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .welcome-header h2 {
+            color: #1a202c;
+            font-size: 2rem;
+        }
+
+        .welcome-header h2 span {
+            color: #ff4757;
+        }
+
+        .btn-action {
+            background-color: #ff4757;
+            color: white;
+            padding: 0.75rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-action:hover {
+            background-color: #e84118;
+        }
+
+        /* --- STATS GRID --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid #1a202c;
+        }
+
+        .stat-card.accent {
+            border-left-color: #ff4757;
+        }
+
+        .stat-card h4 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #718096;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .stat-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #1a202c;
+        }
+
+        /* --- DATA TABLE --- */
+        .history-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .history-section h3 {
+            font-size: 1.4rem;
+            color: #1a202c;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #ff4757;
+            padding-left: 0.5rem;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background-color: #edf2f7;
+            color: #4a5568;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        td {
+            padding: 1.2rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: #f7fafc;
+        }
+
+        /* --- STATUS BADGE --- */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            background-color: #feebc8;
+            color: #c05621;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #a0aec0;
+        }
+
+        .no-data p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+                text-align: center;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .welcome-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .dashboard-container {
+                margin: 1.5rem auto;
+                padding: 0 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .history-section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="/frontpage" class="logo">🚨 BreakdownAssist</a>
+        <ul class="nav-links">
+            <li><a href="/frontpage">Request Help</a></li>
+            <li><a href="/user_dashboard" style="color: white; font-weight: bold;">Dashboard</a></li>
+            <li><a href="/logout" class="btn-logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN BODY -->
+    <div class="dashboard-container">
+        
+        <div class="welcome-header">
+            <h2>Welcome Back, <span>{{ username }}</span></h2>
+            <a href="/frontpage" class="btn-action">🚨 Request New Assistance</a>
+        </div>
+
+        <!-- STATS CARDS OVERVIEW -->
+        <div class="stats-grid">
+            <div class="stat-card accent">
+                <h4>Total Assistance Requests</h4>
+                <div class="stat-value">{{ total_count }}</div>
+            </div>
+            <div class="stat-card">
+                <h4>Last Reported Issue</h4>
+                <div class="stat-value" style="font-size: 1.4rem; margin-top: 0.5rem;">
+                    {% if history %}{{ history[0].issue }}{% else %}No incidents logged{% endif %}
+                </div>
+            </div>
+            <div class="stat-card">
+                <h4>Account Status</h4>
+                <div class="stat-value" style="font-size: 1.4rem; color: #38a169; margin-top: 0.5rem;">Active</div>
+            </div>
+        </div>
+
+        <!-- REQUESTS LOG HISTORY -->
+        <div class="history-section">
+            <h3>Your Assistance History</h3>
+            
+            <div class="table-responsive">
+                {% if history %}
+                <table>
+                    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Type of Issue</th>
+        <th>Mechanic Contact</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+</thead>
+<tbody>
+    {% for row in history %}
+    <tr>
+        <td><strong>{{ row.username }}</strong></td>
+        <td>
+            {{ row.location }}
+            {% if row.area_name %}
+                <br><span style="font-size: 0.8rem; color: #667eea; font-weight: bold;">📍 {{ row.area_name }}</span>
+            {% endif %}
+        </td>
+        <td>{{ row.issue }}</td>
+        
+        <td>
+            {% if row.mechanicassigned %}
+                <strong>{{ row.mechanicassigned }}</strong><br>
+                <code>{{ row.mechanicphoneno }}</code>
+            {% else %}
+                <span style="color: #888;">Searching for mechanic...</span>
+            {% endif %}
+        </td>
+        
+        <td><span class="badge">{{row.status}}</span></td>
+        
+        <td>
+            {% if row.mechanicassigned and row.status == 'In Progress' %}
+                <a href="/track_mechanic/{{ row.complaint_id }}" style="background-color: #667eea; color: white; padding: 0.4rem 0.8rem; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 600; display: inline-block;">📍 Track</a>
+            {% else %}
+                <span style="color: #ccc; font-size: 0.85rem;">-</span>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+                </table>
+                {% else %}
+                <div class="no-data">
+                    <p>You haven't filed any breakdown complaints yet.</p>
+                    <a href="/frontpage" style="color: #ff4757; text-decoration: none; font-weight: bold;">Need help now? Click here.</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+   
+
+</body>
+</html>

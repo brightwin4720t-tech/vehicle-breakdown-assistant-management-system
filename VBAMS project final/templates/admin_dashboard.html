@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | BreakdownAssist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #38bdf8;
+            --danger: #f43f5e;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            padding: 2rem;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 1.875rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h1::before {
+            content: '🛡️';
+            font-size: 1.5rem;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-dim);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0.5rem 0 0 0;
+            color: var(--accent);
+        }
+
+        /* Table Styling */
+        h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+        }
+
+        .table-wrapper {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        thead {
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        th {
+            padding: 1rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 1rem;
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-main);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Status Pills */
+        .status-pill {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .status-pill.pending { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+        .status-pill.resolved { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .status-pill.in-progress { background: rgba(56, 189, 248, 0.1); color: var(--accent); }
+
+        /* Buttons */
+        .btn-delete {
+            color: var(--danger);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .btn-delete:hover {
+            background: rgba(244, 63, 94, 0.1);
+            border-color: var(--danger);
+        }
+        .btn-add {
+        background: var(--success);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: opacity 0.2s;
+    }
+    .btn-add:hover { opacity: 0.9; }
+
+    .admin-header-flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+        body {
+            padding: 1rem;
+        }
+        .admin-header-flex {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: stretch;
+            text-align: center;
+        }
+        .stats-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        .card {
+            padding: 1.25rem;
+        }
+        th, td {
+            padding: 0.75rem;
+        }
+    }
+    </style>
+</head>
+<body>
+   <div class="admin-container">
+    <div class="admin-header-flex">
+        <h1>System Overview</h1>
+        <a href="/add_mechanic" class="btn-add">+ Register New Mechanic</a>
+    </div>
+    
+    </div>
+        
+        <div class="stats-grid">
+            <div class="card">
+                <h3>Registered Mechanics</h3>
+                <p class="stat-number">{{ total_mechs }}</p><br><br><br>
+                <a href="/select_mechanic" class="btn-add">View All Mechanics</a>
+            </div>
+            <div class="card">
+                <h3>Total Feedback</h3>
+                <p class="stat-number">{{ feedback_count }}</p><br><br><br>
+                <a href="/select_feedback" class="btn-add">View Total Feedback</a>
+            </div>
+            <div class="card">
+                <h3>Total Service Requests</h3>
+                <p class="stat-number">{{ total_jobs }}</p>
+            </div>
+        </div>
+        
+
+        <h2>Global Live Feed</h2>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Issue</th>
+                        <th>Status</th>
+                        <th>Assigned Mechanic</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in all_jobs %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td><strong>{{ job.username }}</strong></td>
+                        <td>{{ job.issue }}</td>
+                        <td>
+                            <span class="status-pill {{ job.status|lower|replace(' ', '-') }}">
+                                {{ job.status }}
+                            </span>
+                        </td>
+                        <td>{{ job.mechanicassigned or 'Unassigned' }}</td>
+                        <td>
+                            <a href="/delete_complaint/{{ job.complaint_id }}" 
+                               onclick="return confirm('Are you sure you want to remove this request?')" 
+                               class="btn-delete">Remove</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
