@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Our Fleet | BreakdownAssist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --input-bg: #0f172a;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            margin: 0 0 0.5rem 0;
+            text-align: center;
+            color: var(--accent);
+            font-size: 1.75rem;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--input-bg);
+            border: 1px solid #334155;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+        }
+
+        .form-group input::placeholder {
+            color: #475569;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent);
+            border: none;
+            border-radius: 10px;
+            color: #0f172a;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 1rem;
+        }
+
+        .btn-submit:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(56, 189, 248, 0.3);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .footer-note {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <h2>🛠️ Join Our Fleet</h2>
+        <p class="subtitle">Submit your professional details. Our administration team will review your resume and contact you via email.</p>
+        
+        <form action="/add_mechanic" method="post">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" name="name" required placeholder="e.g. John Doe">
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" name="phone" required placeholder="+1 (555) 000-0000">
+            </div>
+            <div class="form-group">
+                <label>Residential Address</label>
+                <input type="text" name="address" required placeholder="City, State, Zip Code">
+            </div>
+            
+            <div class="form-group">
+                <label>Personal Email (Gmail)</label>
+                <input type="email" name="email" required placeholder="name@gmail.com">
+            </div>
+            
+            
+            
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" required placeholder="Enter your password">
+            </div>
+            
+            <button type="submit" class="btn-submit">Submit Application</button>
+        </form>
+
+        <div class="footer-note">
+            By submitting, you agree to our Terms of Service and Privacy Policy.
+        </div>
+    </div>
+
+</body>
+</html>
